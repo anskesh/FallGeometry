@@ -4,19 +4,27 @@ namespace Game
 {
     public class SquareFactory : GeometryFactory
     {
-        protected override Sprite CreateForm()
+        public SquareFactory(PointGenerator generator)
         {
-            throw new System.NotImplementedException();
+            Generator = generator;
+            
+            CreateTemplate();
+            CreateScore();
         }
 
-        protected override IMovement CreateMovement()
+        protected override IMovement CreateMovement(Transform transform)
         {
-            throw new System.NotImplementedException();
+            return new NoMovement();
         }
 
-        public override Geometry CreateGeometry()
+        protected override void CreateScore()
         {
-            throw new System.NotImplementedException();
+            Score = 1;
+        }
+
+        protected override void CreateTemplate()
+        {
+            Template = Resources.LoadAsync<Geometry>("Square").asset as Geometry;
         }
     }
 }
