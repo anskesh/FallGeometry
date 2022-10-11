@@ -4,17 +4,14 @@ namespace Game
 {
     public class SquareFactory : GeometryFactory
     {
-        public SquareFactory(PointGenerator generator)
+        public SquareFactory()
         {
-            Generator = generator;
-            
-            CreateTemplate();
-            CreateScore();
+            Container = new GameObject("Squares").transform;
         }
 
         protected override IMovement CreateMovement(Transform transform)
         {
-            return new NoMovement();
+            return new LinearMovement(transform, Generator);
         }
 
         protected override void CreateScore()

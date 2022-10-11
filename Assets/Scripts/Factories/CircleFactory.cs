@@ -4,17 +4,14 @@ namespace Game
 {
     public class CircleFactory : GeometryFactory
     {
-        public CircleFactory(PointGenerator generator)
+        public CircleFactory()
         {
-            Generator = generator;
-            
-            CreateTemplate();
-            CreateScore();
+            Container = new GameObject("Circles").transform;
         }
 
         protected override IMovement CreateMovement(Transform transform)
         {
-           return new NoMovement();
+           return new LinearMovement(transform, Generator);
         }
 
         protected override void CreateScore()

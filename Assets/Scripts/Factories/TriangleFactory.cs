@@ -4,12 +4,9 @@ namespace Game
 {
     public class TriangleFactory : GeometryFactory
     {
-        public TriangleFactory(PointGenerator generator)
+        public TriangleFactory()
         {
-            Generator = generator;
-            
-            CreateTemplate();
-            CreateScore();
+            Container = new GameObject("Triangles").transform;
         }
         
         protected override IMovement CreateMovement(Transform transform)
