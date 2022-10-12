@@ -6,11 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider))]
 public class Geometry : MonoBehaviour, Observable
 {
+    public bool IsMove { get; set; } = true; 
+    public event Action<int> GainScore;
+    
     private int _score;
     private IMovement _movement;
-    private IMovement _lastMovement;
+    private IMovement _originalMovement;
     private PointGenerator _generator;
-    public event Action<int> GainScore;
 
     private void Update()
     {
@@ -28,9 +30,10 @@ public class Geometry : MonoBehaviour, Observable
 
     public void Initialize(IMovement movement, int score, PointGenerator generator)
     {
-        _movement = movement;
+        _originalMovement = movement;
         _score = score;
         _generator = generator;
+        ChangeMove(true);
     }
 
     private void OnMouseDown()
@@ -39,9 +42,15 @@ public class Geometry : MonoBehaviour, Observable
         GainScore?.Invoke(_score);
     }
 
-    private void ChangeMove()
+    private void ChangeMove(bool first = false)
     {
-        (_lastMovement, _movement) = (_movement, _lastMovement);
+        if (!first)
+            IsMove = !IsMove;
+        
+        if (IsMove)
+            _movement = _originalMovement;
+        else
+            _movement = new NoMovement();
     }
 
     public void OnNotify()

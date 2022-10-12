@@ -36,6 +36,8 @@ namespace Game
                 figure = GameObject.Instantiate(Template, Container);
                 _pauseObserver.Add(figure);
                 figure.GainScore += delegate(int score) { _scoreObserver.Notify(score); };
+                if (_pool.Count > 0)
+                    figure.IsMove = _pool[0].IsMove;
             }
             else
                 figure.gameObject.SetActive(true);
